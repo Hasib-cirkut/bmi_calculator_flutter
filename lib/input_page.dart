@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constatnts.dart';
+import 'result_page.dart';
 
 const Color inactiveCardColor = Color(0xFF0d102b);
 const Color activeCardColor = Color(0xFF1D2033);
@@ -147,6 +148,7 @@ class _InputPageState extends State<InputPage> {
                       which: 'weight',
                       val: weight,
                       label: 'weight',
+                      subLable: 'kg',
                       onPressedPlus: () {
                         setState(() {
                           weight++;
@@ -183,20 +185,26 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            child: Center(
-              child: Text(
-                'Calculate your bmi'.toUpperCase(),
-                style: TextStyle(
-                    fontSize: 20,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w400),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResultPage()));
+            },
+            child: Container(
+              child: Center(
+                child: Text(
+                  'Calculate your bmi'.toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 20,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
+              color: Color(0xFFEA1556),
+              margin: EdgeInsets.only(top: 5),
+              height: 80,
+              width: double.infinity,
             ),
-            color: Color(0xFFEA1556),
-            margin: EdgeInsets.only(top: 5),
-            height: 80,
-            width: double.infinity,
           ),
         ],
       ),
@@ -210,11 +218,13 @@ class ReusableCounter extends StatelessWidget {
       @required this.label,
       @required this.val,
       @required this.onPressedPlus,
-      @required this.onPressedMinus});
+      @required this.onPressedMinus,
+      @required this.subLabel});
 
   final String which;
   final String label;
   final int val;
+  final String subLabel;
   final Function onPressedPlus;
   final Function onPressedMinus;
 
