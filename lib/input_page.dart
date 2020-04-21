@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constatnts.dart';
 import 'result_page.dart';
+import 'brain.dart';
 
 const Color inactiveCardColor = Color(0xFF0d102b);
 const Color activeCardColor = Color(0xFF1D2033);
@@ -148,15 +149,15 @@ class _InputPageState extends State<InputPage> {
                       which: 'weight',
                       val: weight,
                       label: 'weight',
-                      subLable: 'kg',
+                      subLabel: 'kg',
                       onPressedPlus: () {
                         setState(() {
-                          weight++;
+                          if (weight <= 140) weight++;
                         });
                       },
                       onPressedMinus: () {
                         setState(() {
-                          weight--;
+                          if (weight >= 5) weight--;
                         });
                       },
                     ),
@@ -169,14 +170,15 @@ class _InputPageState extends State<InputPage> {
                       which: 'age',
                       val: age,
                       label: 'age',
+                      subLabel: 'yr',
                       onPressedPlus: () {
                         setState(() {
-                          age++;
+                          if (age <= 110) age++;
                         });
                       },
                       onPressedMinus: () {
                         setState(() {
-                          age--;
+                          if (age >= 2) age--;
                         });
                       },
                     ),
@@ -187,8 +189,19 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResultPage()));
+              Brain brain = Brain(age: age, height: height, weight: weight);
+
+              brain.calcBMI();
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultPage(
+                            bmi: brain.bmi(),
+                            hDesc: brain.healthDesc(),
+                            hLevel: brain.healthLevel(),
+                            hLevelColor: brain.healthLevelColor(),
+                          )));
             },
             child: Container(
               child: Center(
@@ -238,9 +251,23 @@ class ReusableCounter extends StatelessWidget {
             label,
             style: kTextStyle,
           ),
-          Text(
-            val.toString(),
-            style: kNumberStyle,
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: <Widget>[
+                Text(
+                  val.toString(),
+                  style: kNumberStyle,
+                ),
+                Text(
+                  subLabel,
+                  style: TextStyle(fontWeight: FontWeight.w200, fontSize: 14),
+                )
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

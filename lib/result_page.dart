@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
+  ResultPage(
+      {@required this.bmi,
+      @required this.hDesc,
+      @required this.hLevel,
+      @required this.hLevelColor});
+
+  final String hLevel, bmi, hDesc;
+  final Color hLevelColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +42,14 @@ class ResultPage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'NORMAL',
+                        hLevel,
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
-                            color: Colors.greenAccent),
+                            color: hLevelColor),
                       ),
                       Text(
-                        '22.1',
+                        bmi,
                         style: TextStyle(
                             fontSize: 90,
                             fontWeight: FontWeight.w700,
@@ -61,7 +70,7 @@ class ResultPage extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        '18 - 25 kg/m2',
+                        '18.5 - 25 kg/m2',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w300,
@@ -71,7 +80,7 @@ class ResultPage extends StatelessWidget {
                         height: 30,
                       ),
                       Text(
-                        'You have a healthy body weight. Good job',
+                        hDesc,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
